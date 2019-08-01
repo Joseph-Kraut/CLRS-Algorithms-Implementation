@@ -215,6 +215,10 @@ public class Heap<T extends Comparable> {
     }
 
     public T deleteHighestPriority() {
+        if (this.heapSize == 0) {
+            return null;
+        }
+
         T topElement = this.heap[0];
 
         // Swap the top and last element
