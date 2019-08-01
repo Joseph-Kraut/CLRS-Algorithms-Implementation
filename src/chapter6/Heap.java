@@ -1,7 +1,4 @@
-package chapter5;
-
-import java.util.ArrayList;
-import java.util.List;
+package chapter6;
 
 public class Heap<T extends Comparable> {
     // The array representing the heap itself
