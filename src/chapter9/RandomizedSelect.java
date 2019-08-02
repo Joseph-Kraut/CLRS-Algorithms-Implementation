@@ -1,6 +1,5 @@
 package chapter9;
 
-import javax.management.monitor.CounterMonitorMBean;
 import java.util.ArrayList;
 import java.util.Random;
 
