@@ -1,5 +1,6 @@
 package chapter10;
 
+import java.util.Currency;
 import java.util.List;
 
 public class DoublyLinkedList<T> {
@@ -14,6 +15,22 @@ public class DoublyLinkedList<T> {
             this.next = next;
             this.prev = prev;
             this.value = value;
+        }
+
+        public boolean equals(Object o) {
+            // Must certainly be a ListElement
+            if (o.getClass() != this.getClass()) {
+                return false;
+            }
+
+            // Otherwise we can just compare the values
+            ListElement obj = (ListElement) o;
+
+            if (obj.value.equals(this.value)) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -215,13 +232,13 @@ public class DoublyLinkedList<T> {
         Checks whether the list contains an element
          */
 
-        if (this.tail.equals(element)) {
+        if (this.tail.value.equals(element)) {
             return true;
         } else {
             ListElement currentElement = this.head;
 
             while (currentElement != this.tail) {
-                if (currentElement.equals(element)) {
+                if (currentElement.value.equals(element)) {
                     return true;
                 }
 
@@ -230,6 +247,54 @@ public class DoublyLinkedList<T> {
 
             return false;
         }
+    }
+
+    public T delete(T element) {
+        /*
+        Deletes the first occurrence of element
+
+        Parameters:
+            element: The element to delete
+
+        Returns:
+            element: If element was found and deleted
+            null: If element was not found
+         */
+
+        // Catch a possible early stop
+        if (this.isEmpty()) {
+            return null;
+        }
+
+        ListElement currentElement = this.head;
+
+        do {
+            // Check if we have found a match
+            if (currentElement.value.equals(element)) {
+                // If this is the head element reset the pointer
+                if (currentElement == this.head) {
+                    this.head = this.head.next;
+                }
+
+                // If this is the tail reset the pointer
+                if (currentElement == this.tail) {
+                    this.tail = this.tail.prev;
+                }
+
+                // Delete the element
+                currentElement.prev.next = currentElement.next;
+                currentElement.next.prev = currentElement.prev;
+
+                this.size -= 1;
+
+                return element;
+            }
+
+            // Otherwise move on to the next element
+            currentElement = currentElement.next;
+        } while (currentElement != this.head);
+
+        return null;
     }
 
     public int size() {
