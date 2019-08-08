@@ -227,25 +227,30 @@ public class DoublyLinkedList<T> {
         this.head = temp;
     }
 
-    public boolean contains(T element) {
+    public T contains(T element) {
         /*
         Checks whether the list contains an element
          */
 
+        // Catch empty list early stop
+        if (this.isEmpty()) {
+            return null;
+        }
+
         if (this.tail.value.equals(element)) {
-            return true;
+            return this.tail.value;
         } else {
             ListElement currentElement = this.head;
 
             while (currentElement != this.tail) {
                 if (currentElement.value.equals(element)) {
-                    return true;
+                    return currentElement.value;
                 }
 
                 currentElement = currentElement.next;
             }
 
-            return false;
+            return null;
         }
     }
 
@@ -271,6 +276,16 @@ public class DoublyLinkedList<T> {
         do {
             // Check if we have found a match
             if (currentElement.value.equals(element)) {
+                // If this is the only element in the list handle it as such
+                if (this.size == 1) {
+                    T temp = this.head.value;
+                    this.head = null;
+                    this.tail = null;
+                    this.size = 0;
+
+                    return temp;
+                }
+
                 // If this is the head element reset the pointer
                 if (currentElement == this.head) {
                     this.head = this.head.next;
