@@ -5,12 +5,12 @@ import jdk.nashorn.api.tree.Tree;
 public class BinaryTreeMap<K extends Comparable, V> {
 
     // Class for tree elements
-    private class TreeElement {
-        K key;
-        V value;
-        TreeElement rightChild;
-        TreeElement leftChild;
-        TreeElement parent;
+    protected class TreeElement {
+        public K key;
+        public V value;
+        public TreeElement rightChild;
+        public TreeElement leftChild;
+        public TreeElement parent;
 
         public TreeElement(K key, V value) {
             this.key = key;
@@ -38,7 +38,7 @@ public class BinaryTreeMap<K extends Comparable, V> {
         this.size = 0;
     }
 
-    public void insert(K key, V value) {
+    protected TreeElement insertHelper(K key, V value) {
         /*
         Inserts a key value pair into the search tree
 
@@ -79,6 +79,12 @@ public class BinaryTreeMap<K extends Comparable, V> {
         }
 
         this.size += 1;
+
+        return newElement;
+    }
+
+    public void insert(K key, V value) {
+        this.insertHelper(key, value);
     }
 
     private TreeElement lookUpTreeElement(K key) {
